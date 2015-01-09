@@ -3,6 +3,7 @@ public static class Global
 {
     public static readonly int MIN_CARD_VALUE = 2;
     public static readonly int MAX_CARD_VALUE = 14;
+    public static readonly int WILD_CARD_VALUE = 15;
 
 
    /* #region Singleton

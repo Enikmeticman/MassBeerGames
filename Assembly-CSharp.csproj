@@ -46,15 +46,33 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\GameAssets\Scripts\Cards\Card.cs" />
-     <Compile Include="Assets\GameAssets\Scripts\Cards\CardEnums.cs" />
-     <Compile Include="Assets\GameAssets\Scripts\Cards\CardShuffler.cs" />
-     <Compile Include="Assets\GameAssets\Scripts\Cards\DeckFactory.cs" />
-     <Compile Include="Assets\GameAssets\Scripts\Deck\IDeck.cs" />
-     <Compile Include="Assets\GameAssets\Scripts\Deck\RandomDeck.cs" />
-     <Compile Include="Assets\GameAssets\Scripts\Deck\RingDeck.cs" />
+     <Compile Include="Assets\GameAssets\Scripts\GamePlay\Cards\Card.cs" />
+     <Compile Include="Assets\GameAssets\Scripts\GamePlay\Cards\CardEnums.cs" />
+     <Compile Include="Assets\GameAssets\Scripts\GamePlay\Cards\CardInstatiator.cs" />
+     <Compile Include="Assets\GameAssets\Scripts\GamePlay\Deck\Deck.cs" />
+     <Compile Include="Assets\GameAssets\Scripts\GamePlay\Deck\DeckFactory.cs" />
+     <Compile Include="Assets\GameAssets\Scripts\GamePlay\Deck\DeckInstatiator.cs" />
+     <Compile Include="Assets\GameAssets\Scripts\GamePlay\Deck\RandomDeck.cs" />
+     <Compile Include="Assets\GameAssets\Scripts\GamePlay\Deck\RingDeck.cs" />
+     <Compile Include="Assets\GameAssets\Scripts\GamePlay\Pile\Pile.cs" />
+     <Compile Include="Assets\GameAssets\Scripts\GamePlay\Pile\PileEnums.cs" />
+     <Compile Include="Assets\GameAssets\Scripts\GamePlay\Pile\PileFactory.cs" />
+     <Compile Include="Assets\GameAssets\Scripts\GamePlay\Pile\PileInstatiator.cs" />
+     <Compile Include="Assets\GameAssets\Scripts\GamePlay\Pile\RandomPile.cs" />
+     <Compile Include="Assets\GameAssets\Scripts\GamePlay\Pile\StackPile.cs" />
      <Compile Include="Assets\GameAssets\Scripts\Global\Global.cs" />
      <Compile Include="Assets\GameAssets\Scripts\Global\GlobalEnums.cs" />
+     <Compile Include="Assets\GameAssets\Scripts\Interaction\Selectable.cs" />
+     <Compile Include="Assets\GameAssets\Scripts\Interaction\Selector.cs" />
+     <Compile Include="Assets\GameAssets\Scripts\Tests\ClickTester.cs" />
+     <Compile Include="Assets\GameAssets\Scripts\Tests\DeckTest.cs" />
+     <Compile Include="Assets\GameAssets\Scripts\Utilitys\Time\ChronoMeter.cs" />
+     <Compile Include="Assets\GameAssets\Scripts\Utilitys\Time\CountDown.cs" />
+     <None Include="Assets\GameAssets\Recources\Shaders\Toon Shading\Sources\Shaders\Toony-Basic.shader" />
+     <None Include="Assets\GameAssets\Recources\Shaders\DiffuseOutline.shader" />
+     <None Include="Assets\GameAssets\Recources\Shaders\Toon Shading\Sources\Shaders\Toony-BasicOutline.shader" />
+     <None Include="Assets\GameAssets\Recources\Shaders\Toon Shading\Sources\Shaders\Toony-LightedOutline.shader" />
+     <None Include="Assets\GameAssets\Recources\Shaders\Toon Shading\Sources\Shaders\Toony-Lighted.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
