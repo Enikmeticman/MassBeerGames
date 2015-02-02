@@ -5,11 +5,11 @@ using System.Collections;
 
 public class CountDown : MonoBehaviour
 {
-    public int TimeSpan;
+    public float TimeSpan;
 
     public EventHandler TimeElapsed = null;
 
-    public static CountDown CreateCountDown(int pTimeSpan)
+    public static CountDown CreateCountDown(float pTimeSpan)
     {
         var obj = new GameObject("CountDown", new Type[] { typeof(CountDown) });
         var countDown = obj.GetComponent<CountDown>();
@@ -21,7 +21,7 @@ public class CountDown : MonoBehaviour
     /// Ctor 
     /// </summary>
     /// <param name="pTimeSpan">Time in seconds</param>
-    private void SetTimer(int pTimeSpan)
+    private void SetTimer(float pTimeSpan)
     {
         this.TimeSpan = pTimeSpan;
     }
@@ -40,8 +40,6 @@ public class CountDown : MonoBehaviour
     private IEnumerator Elapse()
     {
         yield return new WaitForSeconds(TimeSpan);
-
-        Debug.Log("lol");
 
         EventHandler ev = TimeElapsed;
         if (ev != null)

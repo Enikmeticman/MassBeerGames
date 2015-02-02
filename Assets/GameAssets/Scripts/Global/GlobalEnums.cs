@@ -9,3 +9,9 @@ public enum InitializeSuccess
     AlreadyInitialized
 }
 
+public enum OrderType
+{
+    Random,
+    Orderd
+}
+

@@ -21,10 +21,13 @@ public class ClickTester : MonoBehaviour
             {
                 var selecatbeObject = hit.collider.gameObject.GetComponent<Selectable>();
 
+                if (hit.collider.gameObject.layer != Layers.SelectField)
+                    return;
+
                 if (selecatbeObject != null)
                 {
                     selecatbeObject.Select();
-                    _CountDown = CountDown.CreateCountDown(1);
+                    _CountDown = CountDown.CreateCountDown(0.5f);
                     _CountDown.Start();
                     _CountDown.TimeElapsed += (sender, args) =>
                     {

@@ -12,11 +12,11 @@ public static class PileFactory
     /// <returns></returns>
     public static Pile GreatePile(PileType pPile, VisableCardStyle pShowMode, PickStyle pPickMode, Vector3 pPosition)
     {
-        //Get a new deck.
+        //Get a new pile.
         var pile = GetPile(pPile, pPosition);
         pile.Initialize(pShowMode, pPickMode);
 
-        //Name the deck
+        //Name the pile
         pile.name = string.Format("{0}_{1}", pile.GetType().Name, pile.PileId);
 
 

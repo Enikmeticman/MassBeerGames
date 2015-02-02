@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Assets.GameAssets.Scripts.GamePlay;
 using UnityEngine;
 
 public abstract class Deck : Selectable
@@ -44,7 +45,7 @@ public abstract class Deck : Selectable
     /// <param name="pCard">The card that needs to be added.</param>
     /// <param name="pIncex">The index where the new card needs to be.</param>
     /// <returns>true if succeeded.</returns>
-    public abstract bool AddCard(Card pCard, int pIncex);
+    public abstract bool AddCard(Card pCard);
 
     /// <summary>
     /// Shuffles the cards in the deck;

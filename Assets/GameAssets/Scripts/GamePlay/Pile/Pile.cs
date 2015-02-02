@@ -1,4 +1,5 @@
 ﻿using System;
+using Assets.GameAssets.Scripts.GamePlay;
 using UnityEditorInternal.VersionControl;
 using UnityEngine;
 using System.Collections;
@@ -51,7 +52,7 @@ public abstract class Pile : Selectable
     /// <param name="pCard">The card that needs to be added.</param>
     /// <param name="pIncex">The index where the new card needs to be.</param>
     /// <returns>true if succeeded.</returns>
-    public abstract bool AddCard(Card pCard, int pIncex);
+    public abstract bool AddCard(Card pCard);
 
     /// <summary>
     /// Triggers when we click the card.

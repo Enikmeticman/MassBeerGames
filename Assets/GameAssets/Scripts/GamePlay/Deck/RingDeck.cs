@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using Assets.GameAssets.Scripts.GamePlay;
 using UnityEngine;
 using Random = System.Random;
 
@@ -14,7 +15,7 @@ public class RingDeck : Deck
     /// <summary>
     /// A List containing all the cards in the deck.
     /// </summary>
-    private Queue<Card> _Cards = new Queue<Card>();
+    private OrderedCardContainer _Cards = null;
     #endregion
 
     #region Properties
@@ -39,6 +40,7 @@ public class RingDeck : Deck
         DeckId = Deck.DeckInstances;
         ++Deck.DeckInstances;
 
+        _Cards = CardContainer.CreateContainer(this, OrderType.Orderd) as OrderedCardContainer;
         SelectedChanged = OnSelectedChanged;
         HighLighted += OnHighLighted;
     }
@@ -53,11 +55,9 @@ public class RingDeck : Deck
 
         foreach (Card card in pCards)
         {
-            card.Visable = false; 
-            _Cards.Enqueue(card);
+            _Cards.AddCard(card);
         }
 
-        _Cards.Peek().Visable = true;
         return InitializeSuccess.Succeed;
     }
 
@@ -68,9 +68,8 @@ public class RingDeck : Deck
     /// <returns>A Card null if no cards are left</returns>
     public override Card GetCard(string pCardName)
     {
-        if (_Cards.Count > 0)
-            return _Cards.Dequeue();
-        return null;
+
+        return _Cards.GetCard(pCardName);
     }
 
     public Card Top()
@@ -84,41 +83,17 @@ public class RingDeck : Deck
     /// <param name="pCard">The card that needs to be added.</param>
     /// <param name="pIncex">Not used in a ring decj.</param>
     /// <returns>true if succeeded.</returns>
-    public override bool AddCard(Card pCard, int pIncex)
+    public override bool AddCard(Card pCard)
     {
         if (pCard != null && pCard.DeckId == DeckId)
             return false;
 
-        _Cards.Enqueue(pCard);
-        return true;
+        return _Cards.AddCard(pCard);
     }
 
     public override void Shuffle()
     {
-
-        if (_Cards.Count < 2) return;
-
-        _Cards.Peek().Visable = false;
-
-        Card[] cardArr = _Cards.ToArray();
-        _Cards.Clear();
-
-        Random rand = new Random();
-        for (int i = cardArr.Length - 1; i > 0; i--)
-        {
-            int n = rand.Next(i + 1);
-            Card temp = cardArr[i];
-            cardArr[i] = cardArr[n];
-            cardArr[n] = temp;
-
-        }
-
-        foreach (Card card in cardArr)
-        {
-            _Cards.Enqueue(card);
-        }
-
-        _Cards.Peek().Visable = true;
+        _Cards.Shuffle();
     }
 
     public override void Klicked()

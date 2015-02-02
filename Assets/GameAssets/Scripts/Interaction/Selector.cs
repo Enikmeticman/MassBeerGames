@@ -29,7 +29,6 @@ public class Selector : MonoBehaviour
     {
         if (SelectedItem == null)
         {
-            Debug.Log("ddff");
             return;
         }
 

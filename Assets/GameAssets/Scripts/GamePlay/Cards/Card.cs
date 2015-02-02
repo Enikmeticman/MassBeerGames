@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using Assets.GameAssets.Scripts.GamePlay;
 using UnityEngine;
 
 /// <summary>
@@ -155,6 +156,12 @@ public class Card : Selectable
         transform.Rotate(new Vector3(180,0,0));
         _FaceDown = !_FaceDown;
     }
+
+    public Texture FrontImage()
+    {
+        return _Front.material.GetTexture("_MainTex");
+    }
+
     #endregion
 
     #region private functions

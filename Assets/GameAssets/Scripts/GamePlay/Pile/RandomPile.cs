@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Assets.GameAssets.Scripts.GamePlay;
 using UnityEngine;
 using System.Collections;
 
@@ -9,7 +10,7 @@ public class RandomPile : Pile
     /// <summary>
     /// A List containing all the cards in the deck.
     /// </summary>
-    private List<Card> _Cards = new List<Card>();
+    private RandomCardContainer _Cards = null;
     #endregion
 
     #region Properties
@@ -41,6 +42,8 @@ public class RandomPile : Pile
         PileId = Pile.PileInstances;
         ++Pile.PileInstances;
 
+        _Cards = CardContainer.CreateContainer(this, OrderType.Random) as RandomCardContainer;
+
         SelectedChanged = OnSelectedChanged;
         HighLighted += OnHighLighted;
     }
@@ -53,33 +56,31 @@ public class RandomPile : Pile
 
     public override Card GetCard(string pCardName)
     {
-        Card card = _Cards.FirstOrDefault(cardIndexed => cardIndexed.CardName == pCardName);
-
-        if (card != null)
-            _Cards.Remove(card);
-
-        return card;
+        return _Cards.GetCard(pCardName);
     }
 
-    public override bool AddCard(Card pCard, int pIncex)
+    public override bool AddCard(Card pCard)
     {
-        if (pIncex == 0)
-        {
-            if (_Cards.Count > 0)
-                _Cards[0].Visable = false;
-
-            pCard.Visable = true;
-        }
+        _Cards[0].Visable = false;
+        pCard.Visable = true;
 
         pCard.transform.position = this.transform.position;
 
-        if (pIncex > _Cards.Count - 1)
-            _Cards.Add(pCard);
+        _Cards.AddCard(pCard);
 
-        else
-            _Cards.Insert(pIncex, pCard);
+        return true;
+    }
 
+    public bool InsertCard(Card pCard, int pIndex)
+    {
+        if (_Cards.Count > 0)
+            _Cards[0].Visable = false;
 
+        pCard.Visable = true;
+
+        pCard.transform.position = this.transform.position;
+
+        _Cards.Insert(pCard, pIndex);
         return true;
     }
 

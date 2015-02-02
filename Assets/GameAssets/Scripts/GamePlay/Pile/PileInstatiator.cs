@@ -9,9 +9,9 @@ using System.Collections;
 public class PileInstatiator : MonoBehaviour 
 {
     /// <summary>
-    /// The card prefab used for instantiating
+    /// The game object all the piles need to be assigned to.
     /// </summary>
-    public GameObject PrefabPile = null;
+    public Transform PileHolder = null;
 
     #region Singleton
     public static PileInstatiator _Instance = null;
@@ -29,15 +29,25 @@ public class PileInstatiator : MonoBehaviour
     /// <returns></returns>
     public Pile Instatiate(PileType pPile, Vector3 pPosition)
     {
-        var obj = (GameObject)Instantiate(PrefabPile, pPosition, Quaternion.identity);
+        var obj = (GameObject)Instantiate(PrefabContainer.Instance.GetPrefab(PrefabContainer.Prefabs.Pile), pPosition, Quaternion.identity);
         System.Diagnostics.Debug.Assert(obj != null);
+
+        Pile pile = null;
 
         switch (pPile)
         {
             case PileType.Random:
-                return obj.AddComponent<RandomPile>();
+                pile = obj.AddComponent<RandomPile>();
+                break;
             case PileType.Stack:
-                return obj.AddComponent<StackPile>();
+                pile = obj.AddComponent<StackPile>();
+                break;
+        }
+
+        if (pile != null)
+        {
+           pile.transform.parent = PileHolder;
+            return pile; 
         }
 
         System.Diagnostics.Debug.Assert(false);

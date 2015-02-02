@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Assets.GameAssets.Scripts.GamePlay;
 using UnityEditor;
 using UnityEngine;
 using Random = System.Random;
@@ -15,7 +16,7 @@ public class RandomDeck : Deck
     /// <summary>
     /// A List containing all the cards in the deck.
     /// </summary>
-    private List<Card> _Cards = new List<Card>();
+    private RandomCardContainer _Cards = null;
     #endregion
 
     #region Properties
@@ -38,6 +39,8 @@ public class RandomDeck : Deck
         DeckId = Deck.DeckInstances;
         ++Deck.DeckInstances;
 
+        _Cards = CardContainer.CreateContainer(this, OrderType.Random) as RandomCardContainer;
+
         SelectedChanged = OnSelectedChanged; 
         HighLighted += OnHighLighted;
     }
@@ -54,7 +57,7 @@ public class RandomDeck : Deck
 
         foreach (Card card in pCards)
         {
-            _Cards.Add(card);
+            _Cards.AddCard(card);
         }
 
         return InitializeSuccess.Succeed;
@@ -67,14 +70,7 @@ public class RandomDeck : Deck
     /// <returns>The card if found.</returns>
     public override Card GetCard(string pCardName)
     {
-
-        Card card = _Cards.FirstOrDefault(cardIndexed => cardIndexed.CardName == pCardName);
-
-        if (card != null)
-            _Cards.Remove(card);
-
-        return card;
-
+        return _Cards.GetCard(pCardName);
     }
 
     /// <summary>
@@ -83,36 +79,31 @@ public class RandomDeck : Deck
     /// <param name="pCard">The card that needs to be added.</param>
     /// <param name="pIncex">The index where the new card needs to be.</param>
     /// <returns>true if succeeded.</returns>
-    public override bool AddCard(Card pCard, int pIncex)
+    public override bool AddCard(Card pCard)
     {
+        if (pCard != null && pCard.DeckId == DeckId)
+            return false;
 
-       if(pIncex > _Cards.Count -1 )
-           _Cards.Add(pCard);
+        return _Cards.AddCard(pCard);
+    }
 
-       else 
-           _Cards.Insert(pIncex, pCard);
+    /// <summary>
+    /// Add a card. 
+    /// </summary>
+    /// <param name="pCard">The card that needs to be added.</param>
+    /// <param name="pIncex">The index where the new card needs to be.</param>
+    /// <returns>true if succeeded.</returns>
+    public bool Insert(Card pCard, int pIncex)
+    {
+        if (pCard != null && pCard.DeckId == DeckId)
+            return false;
 
-
-        return true;
+        return _Cards.Insert(pCard,pIncex);
     }
 
     public override void Shuffle()
     {
-        if (_Cards.Count < 2) return;
-
-        _Cards[0].Visable = false;
-
-        Random rand = new Random();
-        for (int i = _Cards.Count - 1; i > 0; i--)
-        {
-            int n = rand.Next(i + 1);
-            Card temp = _Cards[i];
-            _Cards[i] = _Cards[n];
-            _Cards[n] = temp;
-
-        }
-
-        _Cards[0].Visable = true;
+        _Cards.Shuffle();
     }
 
     public override void Klicked()
@@ -125,11 +116,17 @@ public class RandomDeck : Deck
     private void OnSelectedChanged(bool pSelected)
     {
         VisualSelect(pSelected);
+
+        if(CardPicker.Instance.Open)
+            CardPicker.Instance.ClosePicker();
     }
 
     private void OnHighLighted()
     {
         VisualHighLight();
+
+        CardPicker.Instance.OpenPicker(_Cards.GetDummyCards());
+
     }
     #endregion
 }

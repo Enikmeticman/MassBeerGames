@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Assets.GameAssets.Scripts.GamePlay;
 using UnityEngine;
 using System.Collections;
 
@@ -8,7 +9,7 @@ public class StackPile : Pile
     /// <summary>
     /// A List containing all the cards in the deck.
     /// </summary>
-    private Queue<Card> _Cards = new Queue<Card>();
+    private OrderedCardContainer _Cards = null;
     #endregion
 
     #region Properties
@@ -40,6 +41,7 @@ public class StackPile : Pile
         PileId = Pile.PileInstances;
         ++Pile.PileInstances;
 
+        _Cards = CardContainer.CreateContainer(this, OrderType.Orderd) as OrderedCardContainer;
         SelectedChanged = OnSelectedChanged;
         HighLighted += OnHighLighted;
     }
@@ -52,12 +54,10 @@ public class StackPile : Pile
 
     public override Card GetCard(string pCardName)
     {
-        if (_Cards.Count > 0)
-            return _Cards.Dequeue();
-        return null;
+        return _Cards.GetCard(pCardName);
     }
 
-    public override bool AddCard(Card pCard, int pIncex)
+    public override bool AddCard(Card pCard)
     {
         if (_Cards.Count > 0)
             _Cards.Peek().Visable = false;
@@ -75,7 +75,7 @@ public class StackPile : Pile
 
         pCard.transform.rotation = this.transform.rotation;
 
-        _Cards.Enqueue(pCard);
+        _Cards.AddCard(pCard);
         return true;
     }
 
